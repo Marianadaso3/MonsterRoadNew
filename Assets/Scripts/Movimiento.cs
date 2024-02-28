@@ -12,7 +12,10 @@ public class Movimiento : MonoBehaviour
     public Vector3 posObjetivo; //variable que me indica la poscion a la que debo de ir 
     public float velocidad;
     //Referencia del objeto del script mundo
-    public Mundo mundo; 
+    public Mundo mundo;
+    //public Transform grafico;  //para que gire el personaje 
+
+
     int posicionZ;
     void Start()
     {
@@ -52,6 +55,7 @@ public class Movimiento : MonoBehaviour
     //Metodo que me sirve para avanzar el personaje
     public void Avanzar()
     {
+        //grafico.eulerAngles = Vector3.zero; //para hacer las rotaciones en cero de todos los lados 
         posicionZ++;
 
         if (posicionZ > carril) //inversa
@@ -64,6 +68,7 @@ public class Movimiento : MonoBehaviour
     //Metodo que me sirve para retroceder el personaje
     public void Retroceder()
     {
+        //grafico.eulerAngles = new Vector3(0, 180, 0);
         if (posicionZ > carril -3)
         {
             posicionZ--; //ya no se va a ejecutar 
