@@ -74,6 +74,6 @@ public class Movimiento : MonoBehaviour
     public void MoverLados(int cuanto)
     {
         lateral += cuanto; //mas uno o menos uno
-        lateral = Mathf.Clamp(lateral, -5, 5); //Poner un minimo y un maximo
+        lateral = Mathf.Clamp(lateral, -4, 4); //Poner un minimo y un maximo
     }
 }
