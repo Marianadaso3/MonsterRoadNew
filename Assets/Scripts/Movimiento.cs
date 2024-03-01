@@ -13,7 +13,9 @@ public class Movimiento : MonoBehaviour
     public float velocidad;
     //Referencia del objeto del script mundo
     public Mundo mundo;
-    //public Transform grafico;  //para que gire el personaje 
+    public Transform grafico;  //para que gire el personaje 
+    public LayerMask capaObstaculos; //cual es la capa donde buscara los obstaculos
+    public float distanciaVista = 1; //la que se utiliza para el rayo en vez de 1.3f
 
 
     int posicionZ;
@@ -45,6 +47,13 @@ public class Movimiento : MonoBehaviour
         }  
     }
 
+    //ejecutarse siempre que deba ejecutarse una raya
+    private void OnDrawGizmos() { //dibujamos la raya para verla 
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(grafico.position + Vector3.up * 0.5f, grafico.position + Vector3.up * 0.5f + grafico.forward * distanciaVista);
+    }
+
     //Metodo que me sirve para actualizar la posicion del personaje
     public void ActualizarPosicion()
     {
@@ -55,9 +64,14 @@ public class Movimiento : MonoBehaviour
     //Metodo que me sirve para avanzar el personaje
     public void Avanzar()
     {
-        //grafico.eulerAngles = Vector3.zero; //para hacer las rotaciones en cero de todos los lados 
-        posicionZ++;
+        grafico.eulerAngles = Vector3.zero; //para hacer las rotaciones en cero de todos los lados (mira hacia enfrente) //AQUI
+        if (MirarAdelante()) //si es TRUE que no avance porque hay algo (obstaculo) 
+        {
+            print ("Obstaculo de frente");
+            return;
+        }
 
+        posicionZ++;
         if (posicionZ > carril) //inversa
         {
            carril = posicionZ; //movimiento 
@@ -68,8 +82,14 @@ public class Movimiento : MonoBehaviour
     //Metodo que me sirve para retroceder el personaje
     public void Retroceder()
     {
-        //grafico.eulerAngles = new Vector3(0, 180, 0);
-        if (posicionZ > carril -3)
+        grafico.eulerAngles = new Vector3(0, 180,0);//gira su cuerpo al retroceder (mira hacia atras) //AQUI
+        if (MirarAdelante()) //si es TRUE que no avance porque hay algo (obstaculo) 
+        {
+            print ("Obstaculo Atras");
+            return;
+        }
+
+        if (posicionZ > carril -3) //que solo pueda retrocede maximo 3 veces
         {
             posicionZ--; //ya no se va a ejecutar 
         }
@@ -78,7 +98,27 @@ public class Movimiento : MonoBehaviour
     //Metodo para que el personaje se mueva a los lados
     public void MoverLados(int cuanto)
     {
+        grafico.eulerAngles = new Vector3(0, 90 * cuanto, 0); //cambio del personaje al estar al tomar movimientos laterales //AQUI
+        if (MirarAdelante()) //si es TRUE que no avance porque hay algo (obstaculo) 
+        {
+            print ("Obstaculo de lado");
+            return;
+        }
+
         lateral += cuanto; //mas uno o menos uno
         lateral = Mathf.Clamp(lateral, -4, 4); //Poner un minimo y un maximo
     }
+
+    public bool MirarAdelante()
+    {
+        RaycastHit hit;
+        Ray rayo = new Ray(grafico.position + Vector3.up * 0.5f, grafico.forward); //la posicion del personaje para detectar si hay algo enfrente (grafico.forward = donde esta mirando)
+
+        if (Physics.Raycast(rayo, out hit, distanciaVista , capaObstaculos)) //forma para lanzar un rayo
+        {
+            return true; //si choca con cualquier cosa que no este en la capa la va a ignorar
+        }
+        return false; 
+    }
+
 }
