@@ -24,9 +24,11 @@ public class Movimiento : MonoBehaviour
     public Animator animaciones;//animaciones
     public AnimationCurve curva;//curva de animacion (SALTO PROGRAMADO)
     bool bloqueo = false; // para bloquear el salto 
-
+    public float tazaIncremento; //para aumentar el nivel de dificultad
+    public float escalaInicial = 0.8f; //inicializamos de una vez con la velocidad en la que empiece
     void Start()
     {
+        Time.timeScale = escalaInicial; //el inicio del juego empieze mas lento
         //Se ejecuta cada medio segundo NO cada frame 
         InvokeRepeating("MirarAgua", 1, 0.5f); //sirve para poner el metodo entre comillas y entre cuantos segudos se va a reializar y luego en cuantos segundos lo va a seguir realizando
         posicionZ = 0;
@@ -38,7 +40,7 @@ public class Movimiento : MonoBehaviour
         ActualizarPosicion();
         
         
-        if (Input.GetKeyDown(KeyCode.W)) //definimos la tecla para avanzar
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) //definimos la tecla para avanzar
         {
             Avanzar();
         } 
@@ -111,6 +113,7 @@ public class Movimiento : MonoBehaviour
         {
            carril = posicionZ; //movimiento 
            mundo.CrearPiso(); //Creara piso segun movimiento
+           Time.timeScale = escalaInicial + tazaIncremento * carril; //va a ir en aumento la dificultad por carril 
         }
         //llamamos al metood que nos ayuda con la composicion de la animacion 
         StartCoroutine(CambiarPosicion());

@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class Camara : MonoBehaviour
 {
-    //Referencia para el movimiento de la camara
-    public Movimiento movimiento;
-    public float velocidad;
+    public float velocidadMovimiento;
 
-    void Update() //Que se mueva la luz con el personaje en vertical pero en laterales no
+    void Update()
     {
-     transform.position = Vector3.Lerp(transform.position, Vector3.forward * movimiento.carril, velocidad * Time.deltaTime);
+        // Mueve la cámara hacia adelante continuamente
+        transform.Translate(Vector3.forward * velocidadMovimiento * Time.deltaTime);
+
+        // Mantén la misma altura que el personaje (puedes ajustar el valor de 'y' según tu escena)
+        float nuevaAltura = transform.position.y;
+
+        // Mantén la misma posición lateral que el personaje
+        float nuevaLateral = transform.position.x; // o movimiento.lateral si lo prefieres
+
+        // Establece la nueva posición de la cámara
+        transform.position = new Vector3(nuevaLateral, nuevaAltura, transform.position.z);
     }
 }

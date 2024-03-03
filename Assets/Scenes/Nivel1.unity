@@ -221,6 +221,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  tazaIncremento: 0.01
+  escalaInicial: 0.9
 --- !u!54 &280733528
 Rigidbody:
   m_ObjectHideFlags: 0
