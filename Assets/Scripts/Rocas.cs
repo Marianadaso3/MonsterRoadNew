@@ -22,11 +22,13 @@ public class Rocas : MonoBehaviour
         {
             if (hit.collider.CompareTag("agua"))
             {
-                // Obtén la escala actual de la roca
+                // Obtén la escala, ángulo y longitud actual de la roca
                 Vector3 escalaRoca = roca.transform.localScale;
+                Quaternion rotacionRoca = roca.transform.rotation;
+                float longitudRoca = roca.GetComponent<Renderer>().bounds.size.z;
                 
-                // Instancia la roca manteniendo la escala actual
-                GameObject nuevaRoca = Instantiate(roca, transform.position - Vector3.forward, transform.rotation);
+                // Instancia la roca manteniendo la escala, rotación y longitud actual
+                GameObject nuevaRoca = Instantiate(roca, transform.position - Vector3.forward * longitudRoca, rotacionRoca);
                 
                 // Aplica la escala a la nueva roca
                 nuevaRoca.transform.localScale = escalaRoca;
