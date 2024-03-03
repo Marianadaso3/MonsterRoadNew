@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
@@ -21,6 +22,9 @@ public class Movimiento : MonoBehaviour
      public LayerMask capaAgua;//capa de agua 
     public int posicionZ;
     public Animator animaciones;//animaciones
+    public AnimationCurve curva;//curva de animacion (SALTO PROGRAMADO)
+    bool bloqueo = false; // para bloquear el salto 
+
     void Start()
     {
         //Se ejecuta cada medio segundo NO cada frame 
@@ -67,14 +71,30 @@ public class Movimiento : MonoBehaviour
         {
             return; //sino esta vivo no puede seguir haciendo nada
         }
-        posObjetivo = new Vector3 (lateral, 0, posicionZ); //para que no se pierda de carril
+        //posObjetivo = new Vector3 (lateral, 0, posicionZ); //para que no se pierda de carril
         //transform.position = posObjetivo;
-        transform.position = Vector3.Lerp(transform.position, posObjetivo, velocidad * Time.deltaTime); //Agregamos velocidad
+        //transform.position = Vector3.Lerp(transform.position, posObjetivo, velocidad * Time.deltaTime); //Agregamos velocidad
     }
+    //Realizar animaciones con codigo para que se vea mejor 
+    public IEnumerator CambiarPosicion()
+    {
+        bloqueo = true;
+        posObjetivo = new Vector3 (lateral, 0, posicionZ); //para que no se pierda de carril
+        Vector3 posActual = transform.position;
+
+        for (int i = 0; i < 10; i++)
+        {
+            transform.position = Vector3.Lerp(posActual, posObjetivo, i * 0.1f) + Vector3.up *curva.Evaluate(i * 0.1f); //me deja elegir la curva para que el movimiento se vea vertical 
+            yield return new WaitForSeconds(1f/velocidad); //mientras mas alta la velocidad mas pequeño el numero de la pausa
+        }
+        //transform.position = Vector3.Lerp(transform.position, posObjetivo, velocidad * Time.deltaTime); //Agregamos velocidad
+        bloqueo = false;
+    }
+
     //Metodo que me sirve para avanzar el personaje
     public void Avanzar()
     {
-        if (!vivo)
+        if (!vivo || bloqueo )
         {
             return; //sino esta vivo no puede seguir haciendo nada
         }
@@ -86,18 +106,20 @@ public class Movimiento : MonoBehaviour
         }
 
         posicionZ++;
-        animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
+        //animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
         if (posicionZ > carril) //inversa
         {
            carril = posicionZ; //movimiento 
            mundo.CrearPiso(); //Creara piso segun movimiento
         }
+        //llamamos al metood que nos ayuda con la composicion de la animacion 
+        StartCoroutine(CambiarPosicion());
     }
 
     //Metodo que me sirve para retroceder el personaje
     public void Retroceder()
     {
-        if (!vivo)
+        if (!vivo|| bloqueo ) //aseguramos con el bloqueo que no habran cambios en la poscion cuando no ha terminado el cambio 
         {
             return; //sino esta vivo no puede seguir haciendo nada
         }
@@ -111,14 +133,16 @@ public class Movimiento : MonoBehaviour
         if (posicionZ > carril -3) //que solo pueda retrocede maximo 3 veces
         {
             posicionZ--; //ya no se va a ejecutar 
-            animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
+            //animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
         }
+        //llamamos al metood que nos ayuda con la composicion de la animacion 
+        StartCoroutine(CambiarPosicion());
     }
     
     //Metodo para que el personaje se mueva a los lados
     public void MoverLados(int cuanto)
     {
-        if (!vivo)
+        if (!vivo || bloqueo )
         {
             return; //sino esta vivo no puede seguir haciendo nada
         }
@@ -130,8 +154,10 @@ public class Movimiento : MonoBehaviour
         }
 
         lateral += cuanto; //mas uno o menos uno
-        animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
-        lateral = Mathf.Clamp(lateral, -4, 4); //Poner un minimo y un maximo
+        //animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
+        lateral = Mathf.Clamp(lateral, -4, 4); //Poner un minimo y un maximo.
+        //llamamos al metood que nos ayuda con la composicion de la animacion 
+        StartCoroutine(CambiarPosicion());
     }
 
     public bool MirarAdelante()
