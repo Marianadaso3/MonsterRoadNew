@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 280733527}
   - component: {fileID: 280733529}
   - component: {fileID: 280733528}
+  - component: {fileID: 280733530}
   m_Layer: 0
   m_Name: Personaje
   m_TagString: Player
@@ -182,7 +183,11 @@ MonoBehaviour:
     m_Bits: 64
   distanciaVista: 1.1
   vivo: 1
+  capaAgua:
+    serializedVersion: 2
+    m_Bits: 16
   posicionZ: 0
+  animaciones: {fileID: 280733530}
 --- !u!54 &280733528
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -210,8 +215,29 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1361394, y: 0.7486776, z: 0.8053619}
-  m_Center: {x: -0.009074688, y: 0.4690296, z: 0.033922225}
+  m_Size: {x: 0.981735, y: 0.59986895, z: 0.8053619}
+  m_Center: {x: 0.00017648935, y: 0.4379302, z: 0.033922225}
+--- !u!95 &280733530
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280733525}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91be5d61ea0e52242b879261cd55b1da, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &581830354
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,8 +506,10 @@ MonoBehaviour:
   - {fileID: 4027027264624056210, guid: 0188aa3a8aa07c0488d7b4e972c3ff74, type: 3}
   - {fileID: 6035126396007174206, guid: ab2e4b71bd5a4214b8bf7729a46ce820, type: 3}
   - {fileID: 6035126396007174206, guid: 772992b5e139c584181a588f280f2015, type: 3}
-  - {fileID: 6035126396007174206, guid: 3d0f4c33d43e4e34c983d681948bb7af, type: 3}
   - {fileID: 6035126396007174206, guid: 27c85c2f18fbf184ba1cc880d28f56ef, type: 3}
+  - {fileID: 6035126396007174206, guid: f3b841e2e63172f44a2c4330b1b9eb32, type: 3}
+  - {fileID: 6035126396007174206, guid: 3d0f4c33d43e4e34c983d681948bb7af, type: 3}
+  - {fileID: 6035126396007174206, guid: f3b841e2e63172f44a2c4330b1b9eb32, type: 3}
   pisosDiferencia: 10
 --- !u!4 &717642828
 Transform:
@@ -719,6 +747,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1071677802239665673, guid: 8e91dd081d34b1f43a0aa1cd6a816dcb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e3c4242ba7ed4ad40a5cadafcc47d0cf, type: 2}
     - target: {fileID: 1368516053762494186, guid: 8e91dd081d34b1f43a0aa1cd6a816dcb, type: 3}
       propertyPath: m_IsActive
       value: 0

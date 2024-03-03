@@ -20,6 +20,7 @@ public class Movimiento : MonoBehaviour
     public bool vivo = true;//para que el personaje pueda morir
      public LayerMask capaAgua;//capa de agua 
     public int posicionZ;
+    public Animator animaciones;//animaciones
     void Start()
     {
         //Se ejecuta cada medio segundo NO cada frame 
@@ -85,6 +86,7 @@ public class Movimiento : MonoBehaviour
         }
 
         posicionZ++;
+        animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
         if (posicionZ > carril) //inversa
         {
            carril = posicionZ; //movimiento 
@@ -109,6 +111,7 @@ public class Movimiento : MonoBehaviour
         if (posicionZ > carril -3) //que solo pueda retrocede maximo 3 veces
         {
             posicionZ--; //ya no se va a ejecutar 
+            animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
         }
     }
     
@@ -127,6 +130,7 @@ public class Movimiento : MonoBehaviour
         }
 
         lateral += cuanto; //mas uno o menos uno
+        animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
         lateral = Mathf.Clamp(lateral, -4, 4); //Poner un minimo y un maximo
     }
 
@@ -148,6 +152,7 @@ public class Movimiento : MonoBehaviour
     {
         if (other.CompareTag("depredador"))
         {
+            animaciones.SetTrigger("morir");
             vivo = false;
         }
     }
@@ -161,6 +166,8 @@ public class Movimiento : MonoBehaviour
         {
             if (hit.collider.CompareTag("agua"))//si el tag es agua se muere
             {
+                //agregamos las animaciones de muerte en el agua
+                animaciones.SetTrigger("hundir");
                 vivo = false;
             }
         }
