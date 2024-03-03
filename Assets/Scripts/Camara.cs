@@ -8,7 +8,7 @@ public class Camara : MonoBehaviour
     public Movimiento movimiento;
     public float velocidad;
 
-    void Update() //Que se mueva la camara con el personaje en vertical pero en laterales no
+    void Update() //Que se mueva la luz con el personaje en vertical pero en laterales no
     {
      transform.position = Vector3.Lerp(transform.position, Vector3.forward * movimiento.carril, velocidad * Time.deltaTime);
     }

@@ -18,7 +18,7 @@ public class Movimiento : MonoBehaviour
     public float distanciaVista = 1; //la que se utiliza para el rayo en vez de 1.3f
 
 
-    int posicionZ;
+    public int posicionZ;
     void Start()
     {
         posicionZ = 0;
