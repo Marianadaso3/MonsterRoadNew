@@ -11,7 +11,7 @@ public class DevDepredador : MonoBehaviour
     {
         if (other.CompareTag("depredador"))
         {
-            other.transform.Translate(0,0,-10); //hacia adelante positivo, hacia atras negativo 
+            other.transform.Translate(0,0, 20); //hacia adelante positivo, hacia atras negativo 
         }    
     }
 }
