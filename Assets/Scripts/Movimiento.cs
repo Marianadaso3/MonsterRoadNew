@@ -158,7 +158,7 @@ public class Movimiento : MonoBehaviour
 
         lateral += cuanto; //mas uno o menos uno
         //animaciones.SetTrigger("saltar");//agrego animacion tambien de salto por paso
-        lateral = Mathf.Clamp(lateral, -4, 4); //Poner un minimo y un maximo.
+        lateral = Mathf.Clamp(lateral, -5, 5); //Poner un minimo y un maximo.
         //llamamos al metood que nos ayuda con la composicion de la animacion 
         StartCoroutine(CambiarPosicion());
     }

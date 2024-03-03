@@ -6,37 +6,27 @@ public class Rocas : MonoBehaviour
 {
     // Variables 
     public GameObject roca;
-    
     void Start()
     {
         LanzarRayo();
     }
 
     // Update is called once per frame
-    public void LanzarRayo()
+    public void LanzarRayo() //Creamos rayo para que no nos quedemos sin poder avanzar
     {
         RaycastHit hit;
-        Ray rayo = new Ray(transform.position + Vector3.up * 3 - Vector3.forward, Vector3.down);
-        
-        if (Physics.Raycast(rayo, out hit))
+        Ray rayo = new Ray(transform.position + Vector3.up * 3 - Vector3.forward, Vector3.down); // colocando posicion en la cual lanzara el rayo
+        if (Physics.Raycast(rayo, out hit))//lanzamos rayo y se topa con algo va a preguntar:
         {
-            if (hit.collider.CompareTag("agua"))
+            if (hit.collider.CompareTag("agua")) //si el tag con el que se topo es agua 
             {
-                // Obtén la escala, ángulo y longitud actual de la roca
-                Vector3 escalaRoca = roca.transform.localScale;
-                Quaternion rotacionRoca = roca.transform.rotation;
-                float longitudRoca = roca.GetComponent<Renderer>().bounds.size.z;
-                
-                // Instancia la roca manteniendo la escala, rotación y longitud actual
-                GameObject nuevaRoca = Instantiate(roca, transform.position - Vector3.forward * longitudRoca, rotacionRoca);
-                
-                // Aplica la escala a la nueva roca
-                nuevaRoca.transform.localScale = escalaRoca;
-            } 
-            else if (hit.collider.CompareTag("obstaculo"))
+                Instantiate(roca, transform.position - Vector3.forward, transform.rotation);//debe crear una roca nueva
+            } else if (hit.collider.CompareTag("obstaculo")) //si el tag con el que se topo con un obstauclo (roca)
             {
-                Destroy(hit.transform.gameObject);
+                Destroy(hit.transform.gameObject);  //destruyo el objeto para que pueda pasar
             }
+
         }
+
     }
 }
