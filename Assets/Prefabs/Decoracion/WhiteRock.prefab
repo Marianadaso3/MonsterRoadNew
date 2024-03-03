@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8434581345460250178}
   - component: {fileID: 6299199169329686076}
   - component: {fileID: 3041756845921387328}
+  - component: {fileID: -358466719567658165}
   m_Layer: 6
   m_Name: WhiteRock
-  m_TagString: Untagged
+  m_TagString: obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,3 +99,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.77, y: 0.33, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-358466719567658165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6279511940497695389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edadaa7c2a10428448ca4efec64625b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

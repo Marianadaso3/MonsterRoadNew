@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7416654866054523517}
   - component: {fileID: 6975454264103282777}
   - component: {fileID: 5831947129861401186}
+  - component: {fileID: 9038821247502504659}
   m_Layer: 6
   m_Name: OrangeRock
-  m_TagString: Untagged
+  m_TagString: obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,3 +99,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.39, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9038821247502504659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8520692499065476332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edadaa7c2a10428448ca4efec64625b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

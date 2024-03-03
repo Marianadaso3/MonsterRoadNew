@@ -267,6 +267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WhiteRock
       objectReference: {fileID: 0}
+    - target: {fileID: 6279511940497695389, guid: 3d291cd624dafa64ab6272dbb62d540f, type: 3}
+      propertyPath: m_TagString
+      value: obstaculo
+      objectReference: {fileID: 0}
     - target: {fileID: 8434581345460250178, guid: 3d291cd624dafa64ab6272dbb62d540f, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1324037832915682483}
   - component: {fileID: 3312415152111437751}
   - component: {fileID: 4760244554457212376}
+  - component: {fileID: 2254551211210714147}
   m_Layer: 4
   m_Name: RocaEnAgua
-  m_TagString: Untagged
+  m_TagString: roca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,3 +98,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2729613, y: 1.6442037, z: 1.9397722}
   m_Center: {x: 0.0056499452, y: 0.000098063196, z: 0.015399215}
+--- !u!114 &2254551211210714147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5522127296482179552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349c3a1854cb10d4aafb5051cd8e62ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roca: {fileID: 5522127296482179552}
