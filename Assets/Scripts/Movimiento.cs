@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Movimiento : MonoBehaviour
 {
@@ -16,11 +17,13 @@ public class Movimiento : MonoBehaviour
     public Transform grafico;  //para que gire el personaje 
     public LayerMask capaObstaculos; //cual es la capa donde buscara los obstaculos
     public float distanciaVista = 1; //la que se utiliza para el rayo en vez de 1.3f
-
-
+    public bool vivo = true;//para que el personaje pueda morir
+     public LayerMask capaAgua;//capa de agua 
     public int posicionZ;
     void Start()
     {
+        //Se ejecuta cada medio segundo NO cada frame 
+        InvokeRepeating("MirarAgua", 1, 0.5f); //sirve para poner el metodo entre comillas y entre cuantos segudos se va a reializar y luego en cuantos segundos lo va a seguir realizando
         posicionZ = 0;
     }
 
@@ -28,6 +31,7 @@ public class Movimiento : MonoBehaviour
     void Update()
     {   
         ActualizarPosicion();
+        
         
         if (Input.GetKeyDown(KeyCode.W)) //definimos la tecla para avanzar
         {
@@ -57,6 +61,11 @@ public class Movimiento : MonoBehaviour
     //Metodo que me sirve para actualizar la posicion del personaje
     public void ActualizarPosicion()
     {
+        //actualizacion de posicion si se lo come el depredador 
+        if (!vivo)
+        {
+            return; //sino esta vivo no puede seguir haciendo nada
+        }
         posObjetivo = new Vector3 (lateral, 0, posicionZ); //para que no se pierda de carril
         //transform.position = posObjetivo;
         transform.position = Vector3.Lerp(transform.position, posObjetivo, velocidad * Time.deltaTime); //Agregamos velocidad
@@ -64,6 +73,10 @@ public class Movimiento : MonoBehaviour
     //Metodo que me sirve para avanzar el personaje
     public void Avanzar()
     {
+        if (!vivo)
+        {
+            return; //sino esta vivo no puede seguir haciendo nada
+        }
         grafico.eulerAngles = Vector3.zero; //para hacer las rotaciones en cero de todos los lados (mira hacia enfrente) //AQUI
         if (MirarAdelante()) //si es TRUE que no avance porque hay algo (obstaculo) 
         {
@@ -82,6 +95,10 @@ public class Movimiento : MonoBehaviour
     //Metodo que me sirve para retroceder el personaje
     public void Retroceder()
     {
+        if (!vivo)
+        {
+            return; //sino esta vivo no puede seguir haciendo nada
+        }
         grafico.eulerAngles = new Vector3(0, 180,0);//gira su cuerpo al retroceder (mira hacia atras) //AQUI
         if (MirarAdelante()) //si es TRUE que no avance porque hay algo (obstaculo) 
         {
@@ -98,6 +115,10 @@ public class Movimiento : MonoBehaviour
     //Metodo para que el personaje se mueva a los lados
     public void MoverLados(int cuanto)
     {
+        if (!vivo)
+        {
+            return; //sino esta vivo no puede seguir haciendo nada
+        }
         grafico.eulerAngles = new Vector3(0, 90 * cuanto, 0); //cambio del personaje al estar al tomar movimientos laterales //AQUI
         if (MirarAdelante()) //si es TRUE que no avance porque hay algo (obstaculo) 
         {
@@ -111,6 +132,7 @@ public class Movimiento : MonoBehaviour
 
     public bool MirarAdelante()
     {
+
         RaycastHit hit;
         Ray rayo = new Ray(grafico.position + Vector3.up * 0.5f, grafico.forward); //la posicion del personaje para detectar si hay algo enfrente (grafico.forward = donde esta mirando)
 
@@ -121,4 +143,26 @@ public class Movimiento : MonoBehaviour
         return false; 
     }
 
+    //Metodo para choque con el depredador
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("depredador"))
+        {
+            vivo = false;
+        }
+    }
+    //Metodo para que se muera el personaje con el carril de agua (tiramos rayo)
+    public void MirarAgua()
+    {
+        RaycastHit hit;
+        Ray rayo = new Ray(transform.position + Vector3.up, Vector3.down);
+
+        if (Physics.Raycast(rayo, out hit, 3, capaAgua)) //tiramos el rayo para abajo 
+        {
+            if (hit.collider.CompareTag("agua"))//si el tag es agua se muere
+            {
+                vivo = false;
+            }
+        }
+    }
 }
